@@ -1,35 +1,66 @@
-Ruby Version: 2.7.6
-Browser tested on: Google Chrome 106.0.5249.119
-PostgreSQL: 14.5
+# Music Lesson Planner
 
-To run this application download the files. You'll need to have the `bundler` gem
-installed. Use the command `gem install bundler` if you don't have it. CD into the
-`lesson_planner_project` directory and run `bundle install` to install the projects
-dependencies using the Gemfile.
+This is a web application for scheduling music lessons with a teacher. Students names, along with the instrument they play, can be saved and lessons can be attached to that student. Each students lessons can be viewed individually or in a schedule with all of the students included.
+
+## Technologies
+
+- Ruby (2.7.6)
+- PostgreSQL (14.5)
+- Sinatra
+- ERB
+
+## Run locally
+
+### Prerequisites
+
+You'll need:
+
+- Ruby version 2.7.6 installed
+- bundler gem installed
+- PostgreSQL installed
+
+Run the following commands:
+
+```bash
+git clone https://github.com/BradleyRobertTaylor/lesson-planner.git
+cd lesson-planner
+bundle install
+```
 
 Make sure you have PostgreSQL installed and run the following command to create the
 database:
 
-`createdb students_and_lessons`
+```bash
+createdb students_and_lessons
+```
 
-After creating this database run the following command to import the tables and seed
+After creating the database run the following command to import the tables and seed
 data:
 
-`psql -d students_and_lessons < students_and_lessons.sql`
+```bash
+psql -d students_and_lessons < students_and_lessons.sql
+```
 
 Run the following command to start the application:
-`bundle exec ruby music_student_tracker.rb`
 
-View it in your browser at `localhost:4567`.
+```bash
+bundle exec ruby music_student_tracker.rb
+```
+
+The application will be available at `http://localhost:4567`
+
+## Simple Login Verification
+
 To begin using the application you first have to login with:
 
 User Name: admin
 Password: admin
 
-This is a very simple login verification without any encryption since this was not
-required for the project.
+This is a very simple login authentication without encryption or saving of information.
 
-For my project I have created a Sinatra application that is meant to keep track
+## Description
+
+For this project I created a Sinatra application that is meant to keep track
 of a music teachers students and lessons. The user can enter students names and the
 instrument they play. They can also add lessons with a date, start time, and end
 time for the lesson. I decided to allow the user to put in multiple lessons that
@@ -46,34 +77,23 @@ and time. The schedule page only display lessons that are after the current time
 and date. Each page that displays these rows of the database are limited to 5 per
 page.
 
-# Data Structures
+## Data Structures
 
-#
-
+```ruby
 # Student with lessons
-
-# { student_id: 1,
-
-# first_name: "Bradley",
-
-# last_name: "Taylor",
-
-# instrument: "Cello",
-
-# lessons: [{lesson_id: 1, date: 2022-11-28, start_time: 04:00, end_time: 05:00}
-
-# {lesson_id: 2, date: 2022-11-28, start_time: 04:00, end_time: 05:00}]
+{ student_id: 1,
+  first_name: "Bradley",
+  last_name: "Taylor",
+  instrument: "Cello",
+  lessons: [{lesson_id: 1, date: 2022-11-28, start_time: 04:00, end_time: 05:00}
+            {lesson_id: 2, date: 2022-11-28, start_time: 04:00, end_time: 05:00}]
 
 # Student
-
-# { student_id: 1,
-
-# first_name: "Bradley",
-
-# last_name: "Taylor",
-
-# instrument: "Cello" }
+{ student_id: 1,
+  first_name: "Bradley",
+  last_name: "Taylor",
+  instrument: "Cello" }
 
 # Lesson
-
-# { lesson_id: 1, date: 2022-11-28, start_time: 04:00, end_time: 05:00 }
+{ lesson_id: 1, date: 2022-11-28, start_time: 04:00, end_time: 05:00 }
+```
