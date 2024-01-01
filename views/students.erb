@@ -1,0 +1,56 @@
+<% if @all_students.empty? %>
+ <p>There are currently no students.</p>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Instrument</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @students.each do |student| %>
+        <tr>
+          <td scope="row">
+            <a class="student-name-link" href="/students/<%= student[:student_id] %>">
+            <%= display_name(student) %>
+            </a>
+            <a href="/students/<%= student[:student_id] %>/edit">
+              <button type="button">Edit</button>
+            </a>
+          </td>
+          <td>
+            <%= student[:instrument] %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<div class="pagination">
+<% if @page < 2 %>
+  <a>&laquo;</a>
+<% else %>
+  <a href="/students?page=<%= @page - 1 %>">&laquo;</a>
+<% end %>
+
+<% (1..max_page(@all_students)).each do |page_num| %>
+  <a href="/students?page=<%= page_num %>"><%= page_num %></a>
+<% end %>
+
+<% if @page == max_page(@all_students)  %>
+  <a>&raquo;</a>
+<% else %>
+  <a href="/students?page=<%= @page + 1 %>">&raquo;</a>
+<% end %>
+</div>
+
+<form class="delete" action="/students/destroy_all" method="post">
+  <button type="submit" class="delete">Delete All Students</button>
+</form>
+
+<% end %>
+
+<a id="new_student" href="/students/new">Add New Student</a>
+
+

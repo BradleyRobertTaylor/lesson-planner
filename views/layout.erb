@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lesson Planner</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/stylesheets/lesson_planner.css">
+    <script src="/javascripts/jquery-2.2.4.js"></script>
+    <script src="/javascripts/application.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav class="menu">
+        <h1>Lesson Planner</h1>
+        <a href="/students">Home</a>
+        <a href="/schedule">Schedule</a>
+      </nav>
+
+      <% if session[:error] %>
+        <p class="error_message"><%= session.delete(:error) %></p>
+      <% end %>
+
+      <% if session[:success] %>
+        <p class="success_message"><%= session.delete(:success) %></p>
+      <% end %>
+    </header>
+
+    <main>
+      <%== yield %>
+    </main>
+
+    <% if session[:user_name] %>
+      <form action="/logout" method="post">
+        <input type = "submit" value ="Logout">
+      </form>
+    <% end %>
+  </body>
+</html>

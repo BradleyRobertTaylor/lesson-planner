@@ -1,0 +1,16 @@
+<form action="/students/<%= @student[:student_id] %>" method="post">
+  <dl>
+    <dt><label for="date">Enter the date:</label></dt>
+    <dd><input type="date" name="date" required pattern="\d{4}-\d{2}-\d{2}" /></dd>
+
+    <dt><label for="start_time">Enter the start time:</label></dt>
+    <dd><input id="start_time" type="time" name="start_time"/></dd>
+
+    <dt><label for="end_time">Enter the end time:</label></dt>
+    <dd><input id="end_time" type="time" name="end_time"/></dd>
+  </dl>
+
+  <input type="submit" value="Save">
+  <a href="/students/<%= @student[:student_id] %>"><button type="button">Cancel</button></a>
+</form>
+

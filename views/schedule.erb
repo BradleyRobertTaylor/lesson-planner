@@ -1,0 +1,47 @@
+<h2>Schedule</h2>
+<% if @all_lessons.empty? %>
+  <p>There are no lessons coming up.</p>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @lessons.each do |lesson| %>
+          <tr>
+            <td><%= lesson[:name] %></td>
+            <td><%=display_date(lesson[:date])%></td>
+            <td><%=display_time(lesson[:start_time])%></td>
+            <td><%=display_time(lesson[:end_time])%></td>
+          <tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+  <% if @page < 2 %>
+    <a>&laquo;</a>
+  <% else %>
+    <a href="/schedule?page=<%= @page - 1 %>">&laquo;</a>
+  <% end %>
+
+  <% (1..max_page(@all_lessons)).each do |page_num| %>
+    <a href="/schedule?page=<%= page_num %>"><%= page_num %></a>
+  <% end %>
+
+  <% if @page == max_page(@all_lessons)  %>
+    <a>&raquo;</a>
+  <% else %>
+    <a href="/schedule?page=<%= @page + 1 %>">&raquo;</a>
+  <% end %>
+  </div>
+
+  <form class="delete" action="/students/lesson/destroy_all" method="post">
+    <button type="submit" class="delete">Delete All Lessons</button>
+  </form>
+<% end %>

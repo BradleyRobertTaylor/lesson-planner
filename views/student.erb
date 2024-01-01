@@ -1,0 +1,57 @@
+<h2 class="student_header_name"><%= display_name(@student) %></h2>
+
+<% if @lessons.empty? %>
+  <p class="empty_message">
+    This student has no lessons.
+  </p>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @lessons.each do |lesson| %>
+        <tr>
+          <td scope="row">
+            <%= display_date(lesson[:date]) %>
+            <a href="/students/<%= @student[:student_id] %>/lesson/<%= lesson[:lesson_id] %>/edit">
+              <button type="button">Edit</button>
+            </a>
+          </td>
+          <td><%= display_time(lesson[:start_time]) %></td>
+          <td><%= display_time(lesson[:end_time]) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+  <% if @page < 2 %>
+    <a>&laquo;</a>
+  <% else %>
+    <a href="/students/<%= @student[:student_id] %>?page=<%= @page - 1 %>">&laquo;</a>
+  <% end %>
+
+  <% (1..max_page(@all_lessons)).each do |page_num| %>
+    <a href="/students/<%= @student[:student_id] %>?page=<%= page_num %>"><%= page_num %></a>
+  <% end %>
+
+  <% if @page == max_page(@all_lessons) %>
+    <a>&raquo;</a>
+  <% else %>
+    <a href="/students/<%= @student[:student_id] %>?page=<%= @page + 1 %>">&raquo;</a>
+  <% end %>
+  </div>
+
+
+  <form class="delete" action="/students/<%= @student[:student_id] %>/lesson/destroy_all" method="post">
+    <button type="submit" class="delete">Delete All Lessons</button>
+  </form>
+<% end %>
+
+<a id="new_lesson" href="/students/<%= @student[:student_id] %>/lesson/new">Add New Lesson</a> 
+
