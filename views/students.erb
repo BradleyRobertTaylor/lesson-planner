@@ -1,56 +1,79 @@
 <% if @all_students.empty? %>
  <p>There are currently no students.</p>
 <% else %>
-  <table>
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Instrument</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @students.each do |student| %>
-        <tr>
-          <td scope="row">
-            <a class="student-name-link" href="/students/<%= student[:student_id] %>">
-            <%= display_name(student) %>
-            </a>
-            <a href="/students/<%= student[:student_id] %>/edit">
-              <button type="button">Edit</button>
-            </a>
-          </td>
-          <td>
-            <%= student[:instrument] %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-<div class="pagination">
-<% if @page < 2 %>
-  <a>&laquo;</a>
-<% else %>
-  <a href="/students?page=<%= @page - 1 %>">&laquo;</a>
-<% end %>
-
-<% (1..max_page(@all_students)).each do |page_num| %>
-  <a href="/students?page=<%= page_num %>"><%= page_num %></a>
-<% end %>
-
-<% if @page == max_page(@all_students)  %>
-  <a>&raquo;</a>
-<% else %>
-  <a href="/students?page=<%= @page + 1 %>">&raquo;</a>
-<% end %>
+  <div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold leading-6 text-gray-900">Students</h1>
+      <p class="mt-2 text-sm text-gray-700">A list of all the students you've added including their name and instrument.</p>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+      <a id="new_student" href="/students/new" class="block rounded-md bg-[#5C9DFF] px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-opacity">Add Student</a>
+    </div>
+  </div>
+  <div class="mt-8 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Instrument</th>
+              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                <span class="sr-only">Edit</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white">
+            <% @students.each do |student| %>
+              <tr>
+                <td class="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
+                  <div class="flex items-center">
+                    <div class="h-11 w-11 grid place-items-center flex-shrink-0 rounded-full bg-[#5C9DFF]">
+                      <div class="text-white font-bold text-lg"><%= display_initials(student) %></div>
+                    </div>
+                    <div class="ml-4">
+                      <div class="font-medium text-gray-900"><%= display_name(student) %></div>
+                    </div>
+                  </div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                  <div class="text-gray-900"><%= student[:instrument] %></div>
+                </td>
+                <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                  <a href="/students/<%= student[:student_id] %>/edit" class="text-[#6356A6] hover:underline">Edit<span class="sr-only">, <%= display_name(student) %></span></a>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div class="flex justify-center">
+<div class="pagination ">
+  <% if @page < 2 %>
+    <a>&laquo;</a>
+  <% else %>
+    <a href="/students?page=<%= @page - 1 %>">&laquo;</a>
+  <% end %>
+
+  <% (1..max_page(@all_students)).each do |page_num| %>
+    <a href="/students?page=<%= page_num %>"><%= page_num %></a>
+  <% end %>
+
+  <% if @page == max_page(@all_students)  %>
+    <a>&raquo;</a>
+  <% else %>
+    <a href="/students?page=<%= @page + 1 %>">&raquo;</a>
+  <% end %>
+</div>
+
+</div>
 <form class="delete" action="/students/destroy_all" method="post">
-  <button type="submit" class="delete">Delete All Students</button>
+  <button type="submit" class="bg-[#F05757] hover:bg-[#FF5C5C] text-white py-2 px-2 rounded-md">Delete All Students</button>
 </form>
 
 <% end %>
-
-<a id="new_student" href="/students/new">Add New Student</a>
-
-

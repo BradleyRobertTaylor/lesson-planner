@@ -49,6 +49,10 @@ helpers do
     "#{student[:first_name]} #{student[:last_name]}"
   end
 
+  def display_initials(student)
+    "#{student[:first_name][0]} #{student[:last_name][0]}"
+  end
+
   def display_time(time)
     hours, minutes = split_time(time)
     result = Time.new(2022, 1, 1, hours, minutes).strftime("%I:%M %P")
@@ -98,7 +102,7 @@ helpers do
   def check_login
     session[:last_page] = request.path_info
     unless session[:user_name]
-      session[:error] = "You have to be logged in to do that."
+      session[:error] = "You must be logged in to do that."
       halt erb :login
     end
   end
@@ -128,7 +132,7 @@ end
 post "/login" do
   if params[:name] == "admin" && params[:password] == "admin"
     session[:user_name] = params[:name]
-    redirect session.delete(:last_page) if session[:last_page]
+    # redirect session.delete(:last_page) if session[:last_page]
     redirect "/students"
   else
     session[:error] = "Wrong username or password"
